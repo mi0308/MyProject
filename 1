@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class solution_perf {
 
 		long start, end;
 		start = System.currentTimeMillis();
+		System.setIn(new FileInputStream("c:/Temp/input.txt"));
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));  
 //		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));  
 //		start = System.currentTimeMillis();
@@ -37,8 +39,8 @@ public class solution_perf {
 //				Per t = new Per(a, b);    
 //				lst.add(t);
 			}   
-//			end = System.currentTimeMillis();
-//			System.out.println("duration1="+(end-start));
+			end = System.currentTimeMillis();
+			System.out.println("duration1="+(end-start));
 			
 //			Comparator<Per> sort = new Comparator<Per>(){    
 //				public int compare(Per o1, Per o2){     
@@ -74,8 +76,8 @@ public class solution_perf {
 				}
 			}
 			System.out.println("#"+ts+" "+ans);
-//			end = System.currentTimeMillis();
-//			System.out.println("duration3="+(end-start));
+			end = System.currentTimeMillis();
+			System.out.println("duration3="+(end-start));
 			/*
 			bw.write("#"+ts+" "+ans);   
 			bw.newLine();   
@@ -94,8 +96,8 @@ public class solution_perf {
 			return isSubsetSum(set, n-1, sum) || isSubsetSum(set, n-1, sum-set[n-1]);    
 	}
 	
-	public static void print(ArrayList<Perf> list) {  
-		for (Perf each : list)    
+	public static void print(ArrayList<Per> list) {  
+		for (Per each : list)    
 		System.out.println(each.getS()+":"+each.getA()+","+each.getB()); 
 	}
 }
