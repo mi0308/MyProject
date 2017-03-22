@@ -1,0 +1,35 @@
+int bin_search(int s,int e,int X){
+    if (s>e) return -1;
+    int m = (s+e)/2;
+    if (a[m]==X) return m;
+    if (a[m]> X) return bin_search(s,m-1);
+    if (a[m]< X) return bin_search(m+1,e);
+}
+============================================
+
+Object sorting
+class Point {
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+  
+    int x, y;
+}
+public static void main(String[] args) throws Exception {
+        static int N;
+        static Point[] A;
+        N = Integer.parseInt(br.readLine());
+        A = new Point[N+1]; merge_tmp = new Point[N+1];
+        for (int i=1;i<=N;i++){
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
+            A[i] = new Point(x, y);
+        }
+        Arrays.sort(A, 1, N+1, new Comparator<Point>() {
+            public int compare(Point a, Point b) {
+                return a.x - b.x;
+            }
+        });
+}
