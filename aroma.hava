@@ -1,0 +1,144 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.StringTokenizer;
+
+
+public class Aroma {
+
+	public static void main(String[] args) throws Exception{
+		// TODO Auto-generated method stub
+		String path="d:/input.txt";
+//		System.setIn(new FileInputStream(path));
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		
+		int T = Integer.valueOf(br.readLine());
+		
+		ArrayList<Tri> lst;
+		for(int ts = 1;ts<=T;ts++){
+			int N = Integer.valueOf(br.readLine());
+			lst = new ArrayList<Tri>();
+
+			for(int i=0;i<N;i++){
+				StringTokenizer st = new StringTokenizer(br.readLine());
+				int a = Integer.valueOf(st.nextToken());
+				int b = Integer.valueOf(st.nextToken());
+
+				Tri t = new Tri(a, b);
+				lst.add(t);
+			}
+
+			
+			Comparator<Tri> sort = new Comparator<Tri>(){
+				public int compare(Tri o1, Tri o2){
+					return o1.getS() < o2.getS()? -1 : (o1.getS() == o2.getS()? 0: 1);
+				}
+			};
+			Collections.sort(lst, sort);
+//			print(lst);
+			
+			int len = lst.get(N-1).s;
+
+			int[] dp = new int[len+100];
+			dp[0] = 1;
+			for(int i=0;i<N;i++){
+
+				int x = lst.get(i).a;
+				int y = lst.get(i).b;
+
+				for(int j=x;j>=0;j--){
+			
+					if(j==0){
+						dp[y] = 1;
+						continue;
+					}
+
+					if(dp[j] == 1){
+						dp[j+y] = 1;
+					}
+				}
+			}
+			
+//			for(int i=0;i<dp.length;i++){
+//				System.out.print(dp[i]);
+//			}
+//			System.out.println();
+			
+			int ans = Integer.MIN_VALUE;
+			for(int i=len;i>0;i--){
+				
+				if(dp[i] == 1){
+					ans = i;
+					break;
+				}
+			}			
+			
+			bw.write("#"+ts+" "+ans);
+			bw.newLine();
+			bw.flush();
+		}
+	}
+
+    static boolean isSubsetSum(int set[], int n, int sum){
+
+        boolean subset[][] = new boolean[sum+1][n+1];
+        for (int i = 0; i <= n; i++)
+          subset[0][i] = true;
+
+        for (int i = 1; i <= sum; i++)
+          subset[i][0] = false;
+
+         for (int i = 1; i <= sum; i++)
+         {
+           for (int j = 1; j <= n; j++)
+           {
+             subset[i][j] = subset[i][j-1];
+             if (i >= set[j-1])
+               subset[i][j] = subset[i][j] || subset[i - set[j-1]][j-1];
+           }
+         }
+         return subset[sum][n];
+    }
+
+	
+	public static void print(ArrayList<Tri> list) {
+		for (Tri each : list) 
+			System.out.println(each.getS()+":"+each.getA()+","+each.getB());
+	}
+
+}
+
+class Tri {
+	int a, b, s;
+	public int getA() {
+		return a;
+	}
+	public void setA(int a) {
+		this.a = a;
+	}
+	public int getB() {
+		return b;
+	}
+	public void setB(int b) {
+		this.b = b;
+	}
+	public int getS() {
+		return s;
+	}
+	public void setS(int s) {
+		this.s = s;
+	}
+	public Tri(int A, int B){
+		this.a = A;
+		this.b = B;
+		this.s = A + B;
+	}	
+}
