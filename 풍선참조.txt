@@ -1,0 +1,20 @@
+L = new int[N+1];
+Stack <Integer> stk = new Stack<>();
+for (int i=1;i<=N;i++){
+	while (!stk.empty() && A[stk.peek()] >= A[i]) stk.pop();
+	L[i] = stk.empty() ? 1 : stk.peek() + 1;
+	stk.push(i);
+}
+R = new int[N+1];
+stk = new Stack<>();
+for (int i=N;i>0;i--){
+	while (!stk.empty() && A[stk.peek()] >= A[i]) stk.pop();
+	R[i] = stk.empty() ? N : stk.peek() - 1;
+	stk.push(i);
+}
+
+long ans = 0;
+for (int i=1;i<=N;i++)
+	ans = Math.max(ans, (long)(R[i]-L[i]+1) * A[i]);
+
+System.out.println(ans);
