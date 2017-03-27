@@ -1,0 +1,43 @@
+절대 제출 및 공유 하지 마세요.
+
+typedef long long int ll;
+int n;
+ll K, ans = 1;
+int f[NM], ind[NM], visit[NM];
+ll dy[NM];
+void input() {
+    fscanf(in, "%d %lld", &n, &K);
+    FOR(i, 1, n) si(f[i]), ind[f[i]]++;
+}
+void pre() {
+    dy[1] = K; dy[2] = (K*(K - 1)) % MOD;
+    dy[3] = (dy[2]*(K - 2)) % MOD;
+    FOR(i, 4, n) {
+        dy[i] = (dy[i - 1] * (K - 2) + dy[i - 2] * (K - 1)) % MOD;
+    }
+}
+void pro() {
+    queue<int> Q;
+    FOR(i, 1, n) {
+        if (ind[i] == 0) Q.push(i);
+    }
+    while (!Q.empty()){
+        int x = Q.front(); Q.pop();
+        visit[x] = 1;
+        ans = (ans*(K - 1)) % MOD;
+ 
+        ind[f[x]]--; if (ind[f[x]] == 0) Q.push(f[x]);
+    }
+    FOR(i, 1, n) {
+        if (visit[i] == 1) continue;
+        int cnt = 0, x = i;
+        while (1) {
+            cnt++;
+            visit[x] = 1;
+            x = f[x];
+            if (x == i) break;
+        }
+        ans = (ans*dy[cnt]) % MOD;
+    }
+    fprintf(out, "%lld", ans);
+}
