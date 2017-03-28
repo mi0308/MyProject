@@ -16,6 +16,7 @@ public class Warmhall {
 	static ArrayList<Edge> EDGE;
 	static int[] DIST;
 	static String ANS;
+	static boolean chk = true;
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -39,6 +40,7 @@ public class Warmhall {
 				EDGE.add(new Edge(start, end, time));
 				EDGE.add(new Edge(end, start, time));
 			}
+			
 			for(int i=1;i<=W;i++){
 				st        = new StringTokenizer(br.readLine());
 				int start = Integer.parseInt(st.nextToken());
@@ -48,17 +50,36 @@ public class Warmhall {
 				EDGE.add(new Edge(start, end, -time));
 			}
 			
+			if(chk){
+				System.out.println("road");
+				for(int i=1;i<=M;i++){
+					int start = EDGE.get(i).m;
+					int end   = EDGE.get(i).n;
+					int time  = EDGE.get(i).w;
+					System.out.println("start="+start+", end="+end+", time="+time);
+				}
+				
+				System.out.println("warmholl");
+				for(int i=1;i<=W;i++){
+					int start = EDGE.get(i).m;
+					int end   = EDGE.get(i).n;
+					int time  = EDGE.get(i).w;
+					System.out.println("start="+start+", end="+end+", time="+time);
+				}
+			}
+			
+			
 			DIST = new int[N+1];
 			boolean flag = false;
 			for(int i=1;i<=N;i++){
-				boolean sw = false;
+				boolean chk = false;
 				for(Edge e : EDGE){
 					if(DIST[e.m] > DIST[e.n] + e.w){
 						DIST[e.m] = DIST[e.n] + e.w;
-						sw = true;
+						chk = true;
 					}
 				}
-				if(!sw) {
+				if(!chk) {
 					flag = true;
 					break;
 				}
