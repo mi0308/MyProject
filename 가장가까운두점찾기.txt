@@ -1,0 +1,46 @@
+int n;
+struct LIST {
+    int x, y;
+    bool operator()(LIST A, LIST B) {
+        return A.x < B.x;
+    }
+}a[NM], b[NM];
+bool compare(const LIST& A, const LIST& B) {
+    return A.y < B.y;
+}
+void input() {
+    입력
+    sort(a + 1, a + 1 + n, LIST());
+}
+ 
+inline int dist(int i, int j) {
+    점 a[i], a[j] 사이의 거리의 제곱 return
+}
+ 
+int F(int x, int y) { // a[x] .. a[y] 사이의 점들 중 가장 가까운 거리 계산
+    if (x > y) return INF;
+    if (y - x <= 5) { // 완전 탐색
+	전부 비교
+	y로 정렬하기
+        return D_min;
+    }
+    int mid = (x + y) >> 1, X = a[mid].x;
+    int d1 = F(x, mid);
+    int d2 = F(mid+1, y);
+    int D = min(d1, d2);
+    merge(x, mid, y);
+    int temp = 0;
+    FOR(i, x, y) {
+	수직선 x=X와 거리 D 이하의 점들 색출, 배열 b에 넣음
+    }
+    FOR(i, 1, temp) {
+        for (int j = i + 1; j <= i + 8 && j <= temp;j++){
+            D = min(D, b[i]와 b[j]의 거리 계산)
+        }
+    }
+    return D;
+}
+int main() {
+    input();
+    print F(1,n);
+}
